@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "express": "^4.21.0",
+    "node": "^22.9.0",
+    "nodemon": "^3.1.7",
+    "start": "^5.1.0"
+  },
+  "name": "whatsapp_integration_api",
+  "version": "1.0.0",
+  "main": "whatsapp_integration_api.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kaike",
+  "license": "ISC",
+  "description": ""
+}

@@ -17,8 +17,8 @@ class CheckAcessController{
         console.log('2',credentials);
         const [username, password] = credentials.split(':');
         console.log('3',username, password);
-        let user = 'whatsappEZ';
-        let senha = '##token#!whatsapp!#ez$@Jumbo%&*';
+        let user = process.env.CAUSER;
+        let senha = process.env.CAPASSWORD;
         console.log('end check whatsapp Acess midlleware');
         if((username == user) && (password == senha)){
             next()

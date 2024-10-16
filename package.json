@@ -1,7 +1,19 @@
 {
+  "name": "whatsapp_integration_api",
+  "version": "1.0.0",
+  "main": "whatsapp_integration_api.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "author": "Kaike",
+  "license": "ISC",
+  "description": "",
   "dependencies": {
     "body-parser": "^1.20.3",
+    "dotenv": "^16.4.5",
     "express": "^4.21.0",
+    "html-pdf": "^3.0.1",
     "import": "^0.0.6",
     "mysql2": "^3.11.3",
     "node": "^22.9.0",
@@ -9,14 +21,5 @@
     "oracledb": "^6.6.0",
     "sequelize": "^6.37.3",
     "start": "^5.1.0"
-  },
-  "name": "whatsapp_integration_api",
-  "version": "1.0.0",
-  "main": "whatsapp_integration_api.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Kaike",
-  "license": "ISC",
-  "description": ""
+  }
 }

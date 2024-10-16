@@ -1,3 +1,4 @@
+console.log(process.env)
 const{ Sequelize } = require('sequelize')
 const{ QueryTypes } = require('sequelize')
 const OracleDB = require('oracledb')
@@ -21,7 +22,8 @@ class DBConnectionMenager{
                 'dialectOptions':{
                     'schema':'JUMBO'
                     }
-            })     
+            })
+     
         }
         return DBConnectionMenager.#winthorConnection;
 
@@ -32,11 +34,11 @@ class DBConnectionMenager{
       
             DBConnectionMenager.#defaultConnection = new Sequelize({
                 'id':2,
-                'username':'root',
-                'password':'masterkey',
-                'database':'api_whatsapp',
-                'host':'localhost',
-                'port':'3306',
+                'username':process.env.DBUSER,
+                'password':process.env.DBPASSWORD,
+                'database':process.env.DBNAME,
+                'host':process.env.DBHOST,
+                'port':process.env.DBPORT,
                 'dialect':'mysql',
                 'logQueryParameters': true
             })

@@ -1,11 +1,12 @@
 const{ Sequelize } = require('sequelize')
 const{ QueryTypes } = require('sequelize');
-const DBConnectionMenager = require('./src/database/DBConnectionMenager');
+const DBConnectionMenager = require('./app/database/DBConnectionMenager');
 
 async function checkAcess(req, res, next){
     try{
+        console.log('init checkAcess client midlleware');
         if(req.body.fone != null && req.body.fone != "") {
-            const clientLogged = await DBConnectionMenager.getDefaultConnection().query(`
+            let clientLogged = await DBConnectionMenager.getDefaultConnection().query(`
                 SELECT * FROM client_connection
                 WHERE
                 PHONE_NUMBER = ${req.body.fone}  
@@ -16,6 +17,7 @@ async function checkAcess(req, res, next){
             )
             console.log(clientLogged)
             if(clientLogged.length > 0){
+                req.loggedUser = clientLogged[0];
                 next()
             }else{
                 if(req.body.doc != null && req.body.doc != "") {
@@ -29,7 +31,7 @@ async function checkAcess(req, res, next){
                                     OR to_number(regexp_replace(TELCOM,'[^0-9]','')) = to_number(regexp_replace('${req.body.fone}','[^0-9]','')) 
                                 then 1
                                 else 0
-                            end  fonecorrect
+                            end  phonecorrect
                         FROM 
                             PCCLIENT 
                         WHERE 
@@ -37,24 +39,36 @@ async function checkAcess(req, res, next){
                         {
                             type: QueryTypes.SELECT
                         }
+                        
                     );
                     console.log(client)
                     if(client.length > 0){
-                        if(client[0].FONECORRECT){
+                        if(client[0].FONECORRECT) {
                             const resultInsert = await DBConnectionMenager.getDefaultConnection().query(`
                                     INSERT INTO client_connection(
                                     phone_number,
                                     document
                                     )values(
-                                    ${req.body.fone},${req.body.doc}
+                                    cast(regexp_replace('${req.body.fone}','[^0-9]','') as decimal(32)),
+                                    cast(regexp_replace('${req.body.doc}','[^0-9]','') as decimal(32))
                             )`,
                                 {
                                     type: QueryTypes.INSERT
-                                }                            
+                                }                             
                             )
                             console.log(resultInsert)
+                                clientLogged = await DBConnectionMenager.getDefaultConnection().query(`
+                                SELECT * FROM client_connection
+                                WHERE
+                                ID = ${resultInsert[0]}  
+                                 `,
+                                {
+                                    type: QueryTypes.SELECT
+                                }
+                            )
+                            req.loggedUser = clientLogged[0]; 
                             next()
-                        }else{
+                        }else {
                             res.status(401).json({message:'fone incorrect'})
                         }
                     }else{
@@ -73,6 +87,8 @@ async function checkAcess(req, res, next){
     }catch (error) {
         console.log(error)
         res.status(517).json(error)
+    }finally{
+        console.log('end checkAcess client midlleware');
     }
 
 }

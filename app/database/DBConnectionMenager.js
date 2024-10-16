@@ -1,4 +1,4 @@
-console.log(process.env)
+
 const{ Sequelize } = require('sequelize')
 const{ QueryTypes } = require('sequelize')
 const OracleDB = require('oracledb')
@@ -13,10 +13,10 @@ class DBConnectionMenager{
             
             DBConnectionMenager.#winthorConnection = new Sequelize({
                 'id':2,
-                'username':'JUMBO',
-                'password':'JUMBO',
-                'database':'WINT',
-                'host':'192.168.2.42',
+                'username':process.env.WIUSER,
+                'password':process.env.WIPASSWORD,
+                'database':process.env.WIDBNAME,
+                'host':process.env.WIHOST,
                 'dialect':'oracle',
                 'logQueryParameters': true,
                 'dialectOptions':{

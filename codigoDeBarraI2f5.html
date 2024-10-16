@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interleaved 2 of 5 Generator</title>
+    <style>
+        /* Estilo básico para barras */
+        .bar {
+            display: inline-block;
+            height: 100px;
+            margin: 0;
+        }
+        .narrow {
+            width: 2px;
+            background-color: black;
+        }
+        .wide {
+            width: 6px;
+            background-color: black;
+        }
+        .space-narrow {
+            width: 2px;
+            background-color: white;
+        }
+        .space-wide {
+            width: 6px;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gerar Código de Barras - Interleaved 2 of 5</h1>
+    <div id="barcode"></div>
+
+    <script>
+        // Mapeamento de cada dígito para Interleaved 2 of 5
+        const encodingMap = {
+            '0': 'nnwwn',
+            '1': 'wnnnw',
+            '2': 'nwnnw',
+            '3': 'wwnnn',
+            '4': 'nnwnw',
+            '5': 'wnwnn',
+            '6': 'nwwnn',
+            '7': 'nnnww',
+            '8': 'wnnwn',
+            '9': 'nwnwn'
+        };
+
+        // Função para gerar barras do código de barras
+        function generateBarcode(number) {
+            const barcodeDiv = document.getElementById("barcode");
+
+            // Se o número for ímpar, adicionar '0' à esquerda
+            if (number.length % 2 !== 0) {
+                number = '0' + number;
+            }
+
+            // Adicionar o padrão de início
+            createBar('narrow', barcodeDiv);
+            createSpace('narrow', barcodeDiv);
+            createBar('narrow', barcodeDiv);
+            createSpace('narrow', barcodeDiv);
+
+            // Codificar cada par de dígitos
+            for (let i = 0; i < number.length; i += 2) {
+                const firstDigit = encodingMap[number[i]];
+                const secondDigit = encodingMap[number[i + 1]];
+
+                // Codificação intercalada: barras para o primeiro dígito, espaços para o segundo
+                for (let j = 0; j < 5; j++) {
+                    if (firstDigit[j] === 'n') {
+                        createBar('narrow', barcodeDiv);
+                    } else {
+                        createBar('wide', barcodeDiv);
+                    }
+
+                    if (secondDigit[j] === 'n') {
+                        createSpace('narrow', barcodeDiv);
+                    } else {
+                        createSpace('wide', barcodeDiv);
+                    }
+                }
+            }
+
+            // Adicionar o padrão de término
+            createBar('wide', barcodeDiv);
+            createSpace('narrow', barcodeDiv);
+            createBar('narrow', barcodeDiv);
+        }
+
+        // Funções para criar barras e espaços
+        function createBar(size, container) {
+            const bar = document.createElement("div");
+            bar.className = 'bar ' + size;
+            container.appendChild(bar);
+        }
+
+        function createSpace(size, container) {
+            const space = document.createElement("div");
+            space.className = 'bar space-' + size;
+            container.appendChild(space);
+        }
+
+        // Número de 44 dígitos fornecido
+        const barcodeNumber = "74894986300005709611124332025607103990460108";
+        generateBarcode(barcodeNumber);
+    </script>
+</body>
+</html>

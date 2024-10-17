@@ -1,4 +1,3 @@
-const { Script } = require("vm");
 const DBConnectionMenager = require("../database/DBConnectionMenager");
 const { QueryTypes } = require("sequelize");
 const { SELECT } = require("sequelize/lib/query-types");
@@ -128,7 +127,7 @@ class BoletoController{
             PP.codFILIAL = ${req.body.CODFILIAL}
             and PP.duplic = ${req.body.DUPLIC}
             and PP.PREST = ${req.body.PREST}
-            and PP.CODCLI = ${req.loggedUser.client_whintor_id}
+            and PP.CODCLI = ${req.loggedUser.user_winthor_id}
         `;
        
         const billInfo = await DBConnectionMenager.getWhintorConnection().query( query,
@@ -138,7 +137,6 @@ class BoletoController{
         )
         
         if(billInfo.length > 0) {
-        console.log(billInfo[0])
          return billInfo[0];
          
         }

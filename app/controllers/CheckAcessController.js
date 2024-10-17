@@ -2,9 +2,10 @@ const { QueryTypes } = require("sequelize");
 const DBConnectionMenager = require("../database/DBConnectionMenager");
 const { type } = require("os");
 const { SELECT } = require("sequelize/lib/query-types");
-
+const EndPointController = require("./EndPointController")
 
 class CheckAcessController{
+        
         static checkAcess(req, res, next) {
             console.log('init check whatsapp Acess midlleware');
             const basicText = req.headers.authorization?.split(' ')[0] || "";
@@ -31,6 +32,14 @@ class CheckAcessController{
     static async checkAcessUser(req, res, next) {
         try{
             console.log('init checkAcess client midlleware');
+            console.log(req.url)
+            for(let i =0 ; i <  EndPointController.getunRestrictEndPoints().length; i++){
+                if(EndPointController.getunRestrictEndPoints()[i].endPoint == req.url){
+                    console.log('unRestrictEndPoint')
+                    return next()
+                }
+                
+            }
             if(req.body.phone != null && req.body.phone != "") {
                 let userLogged = await DBConnectionMenager.getDefaultConnection().query(`
                     SELECT * FROM user_connection
@@ -60,10 +69,10 @@ class CheckAcessController{
                                 type: QueryTypes.SELECT
                             }
                         )
-                        if(userType.length > 0){
+                        if(userType.length > 0){    
                             let query = userType[0].query_origin_identifer
-                            if(req.body.doc != null && req.body.doc != "") {
-                                query = query.replaceAll('__DOCUMENT__',req.body.doc);
+                            if(req.body.document != null && req.body.document != "") {
+                                query = query.replaceAll('__DOCUMENT__',req.body.document);
                                 query = query.replaceAll('__PHONE__',req.body.phone);
                                 const user = await DBConnectionMenager.getWhintorConnection().query(
                                     query,
@@ -81,7 +90,7 @@ class CheckAcessController{
                                                     user_type_id
                                                 )values(
                                                     cast(regexp_replace('${req.body.phone}','[^0-9]','') as decimal(32)),
-                                                    cast(regexp_replace('${req.body.doc}','[^0-9]','') as decimal(32)),
+                                                    cast(regexp_replace('${req.body.document}','[^0-9]','') as decimal(32)),
                                                     ${user[0].USERID},
                                                     ${req.body.user_type}
                                                 )`,
@@ -102,23 +111,26 @@ class CheckAcessController{
                                         req.loggedUser = userLogged[0]; 
                                         next()
                                     }else {
-                                        res.status(401).json({message:'phone incorrect'})
+                                        res.status(401).json({message: req.url == '/api/user/login' ? 'phone incorrect': 'user not logged'})
                                     }
                                 }else{
-                                    res.status(401).json({message:'user not exist'})                        
+                                    res.status(401).json({message: req.url == '/api/user/login' ? 'user not exist': 'user not logged'})                        
                                 }
                             }else{
-                                res.status(401).json({message: 'missing document'})
+                                res.status(401).json({message: req.url == '/api/user/login' ? 'missing document': 'user not logged'})
                             }
                         }else{
-                            res.status(401).json({message: 'User Type not found'})
+                            res.status(401).json({message: req.url == '/api/user/login' ? 'user Type not found': 'user not logged'})
                         }
                     }else{
-                        res.status(401).json({message: 'Missing user Type'})
+                        res.status(401).json({message: req.url == '/api/user/login' ? 'missing user type': 'user not logged'})        
                     }
                 }
                
             
+            }else{
+                res.status(401).json({message: 'missing phone number'})
+                
             }
         
         }catch (error) {

@@ -5,7 +5,7 @@ const DBConnectionMenager = require('./app/database/DBConnectionMenager');
 async function checkAcess(req, res, next){
     try{
         console.log('init checkAcess client midlleware');
-        if(req.body.fone != null && req.body.fone != "") {
+        if(req.body.phone != null && req.body.phone != "") {
             let clientLogged = await DBConnectionMenager.getDefaultConnection().query(`
                 SELECT * FROM client_connection
                 WHERE
@@ -20,22 +20,22 @@ async function checkAcess(req, res, next){
                 req.loggedUser = clientLogged[0];
                 next()
             }else{
-                if(req.body.doc != null && req.body.doc != "") {
+                if(req.body.document != null && req.body.document != "") {
                     const client = await DBConnectionMenager.getWhintorConnection().query(`
                         SELECT 
                             CODCLI,CLIENTE,TELCOB,CGCENT ,
                             case 
                                 when 
-                                    to_number(regexp_replace(TELENT,'[^0-9]','')) = to_number(regexp_replace('${req.body.fone}','[^0-9]','')) 
-                                    OR to_number(regexp_replace(TELCOB,'[^0-9]','')) = to_number(regexp_replace('${req.body.fone}','[^0-9]',''))
-                                    OR to_number(regexp_replace(TELCOM,'[^0-9]','')) = to_number(regexp_replace('${req.body.fone}','[^0-9]','')) 
+                                    to_number(regexp_replace(TELENT,'[^0-9]','')) = to_number(regexp_replace('${req.body.phone}','[^0-9]','')) 
+                                    OR to_number(regexp_replace(TELCOB,'[^0-9]','')) = to_number(regexp_replace('${req.body.phone}','[^0-9]',''))
+                                    OR to_number(regexp_replace(TELCOM,'[^0-9]','')) = to_number(regexp_replace('${req.body.phone}','[^0-9]','')) 
                                 then 1
                                 else 0
                             end  phonecorrect
                         FROM 
                             PCCLIENT 
                         WHERE 
-                            to_number(regexp_replace(CGCENT,'[^0-9]','')) = to_number(regexp_replace('${req.body.doc}','[^0-9]',''))`,
+                            to_number(regexp_replace(CGCENT,'[^0-9]','')) = to_number(regexp_replace('${req.body.document}','[^0-9]',''))`,
                         {
                             type: QueryTypes.SELECT
                         }
@@ -49,8 +49,8 @@ async function checkAcess(req, res, next){
                                     phone_number,
                                     document
                                     )values(
-                                    cast(regexp_replace('${req.body.fone}','[^0-9]','') as decimal(32)),
-                                    cast(regexp_replace('${req.body.doc}','[^0-9]','') as decimal(32))
+                                    cast(regexp_replace('${req.body.phone}','[^0-9]','') as decimal(32)),
+                                    cast(regexp_replace('${req.body.document}','[^0-9]','') as decimal(32))
                             )`,
                                 {
                                     type: QueryTypes.INSERT
@@ -72,10 +72,10 @@ async function checkAcess(req, res, next){
                             res.status(401).json({message:'fone incorrect'})
                         }
                     }else{
-                        res.status(401).json({message:'Client not exist'})                        
+                        res.status(401).json({message:'User not exist'})                        
                     }
                 }else {
-                    res.status(401).json({message: 'missing identifir'})
+                    res.status(401).json({message: 'User not logged'})
                 }
             }
             

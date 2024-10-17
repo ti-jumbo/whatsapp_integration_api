@@ -22,16 +22,11 @@ class City_Service{
             }
         )
         console.log(city_Info)
-      if(city_Info.lenght > 0){
+      if(city_Info.length > 0){
         res.status(200).json()
       } else {
-        res.sttatus(517).json()
+        res.status(517).json()
       }
-
     } 
-    
-
-
-
 }
 module.exports = City_Service;

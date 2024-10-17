@@ -2,7 +2,6 @@ require('dotenv').config()
 const checkAcess = require('./checkAcess.js');
 const express = require('express');
 const app = express();
-const data = require("./data.json");
 const bodyParser = require('body-parser');
 const pdf = require('html-pdf');
 const path = require('path');

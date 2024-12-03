@@ -1,0 +1,19 @@
+{
+  "name": "whatsapp_integration_api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.1",
+    "html-pdf": "^3.0.1",
+    "mysql2": "^3.11.5",
+    "oracledb": "^6.7.0",
+    "sequelize": "^6.37.5"
+  }
+}

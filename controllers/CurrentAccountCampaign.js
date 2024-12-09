@@ -1,3 +1,4 @@
+require('dotenv').config
 const DBConnectionMenager = require("../database/DBConnectionMenager");
 const { QueryType, QueryTypes } = require("sequelize");
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
@@ -7,10 +8,10 @@ class currentAccountCampaign {
 
     
 
-  static async getDate(req, res, next) {
+  static async getDateAccount(req, res, next) {
     let nameMonth = null;
     let month = req.body.month;
-    let monthSelection
+    let monthSelection = [];
 
     if(month != null && month != ' ' && month != '') {
       if(month == '1'){
@@ -84,6 +85,7 @@ class currentAccountCampaign {
       )
       console.log(getConnectionObj)
       try{
+        
         const reportData = {
           CLIENTES: {
             counterClient:0,
@@ -182,23 +184,28 @@ class currentAccountCampaign {
             }]
           }
         };
+       
         for (let i in reportData) {
+          
           let options = {
             method: 'post',
             body: JSON.stringify({
               visions: [4, 7, 8, 13],
               periods: [
-                month
+                monthSelection
               ],
+            
               viewWeight: true,
               considerNormalSales: true,
               considerReturns: true,
               ...reportData[i]
+              
             }),
+            
           headers: {
             Accept: "application/json",
             "Content-type": "application/json",
-            Authorization: process.env.AUTH// Adicione sua chave de autorização aqui
+            Authorization:process.env.AUTH// Adicione sua chave de autorização aqui
           }
           };
           const url = "http://192.168.2.151:3004/api/controllers/modules/reports/reportscontroller/getcustomizedreportdata"
@@ -207,7 +214,7 @@ class currentAccountCampaign {
           //console.log(`Dados para ${i}`, responseJson);
           const dataArray = responseJson.data[0].DATA;
           const filteredData = dataArray.filter(item => item.CODRCA == req.body.coduser)
-          //console.log(filteredData)
+          
           if(filteredData.length > 0){
             let objectkeys = Object.keys(filteredData[0])
             let colvalname = objectkeys[objectkeys.length - 1]
@@ -219,7 +226,7 @@ class currentAccountCampaign {
           }else{
             console.log("Nenhum dado encontrado");
           }
-            
+          
         };
         let totalPremiacao = 0;
         let contentLines = [];
@@ -237,6 +244,7 @@ class currentAccountCampaign {
             `  
           );
         } 
+        
         let content =`
         <style>
           table {
@@ -347,6 +355,7 @@ class currentAccountCampaign {
           </body>
         </html>
         `;
+        
         pdf.create(content, {
         }).toFile("./CurrentAccountCampaign.pdf",(err,res) => {
             if(err){
@@ -355,14 +364,16 @@ class currentAccountCampaign {
                 console.log(res);
               }
           })
-
+          res.status(200).json(content)
       }catch{
         res.status(517).json("failled")
       }
     }else{
       res.status(401).json("notfound Information Body")
     }
+    
   }
+  
 }
 
 module.exports = currentAccountCampaign;

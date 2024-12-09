@@ -2,68 +2,154 @@ require('dotenv').config
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const pdf = require("html-pdf");
 
-
 class campaignSynergy{
     static async getDatesSynergy(req,res){
-                
-        const reportData = {
-            CRITPART:{
-                REPORTID:1
-            },    
-            DEVOLUCOES:
-            {
-                REPORTID:3
-            },
-            RATINGS:
-            {
-               REPORTID:2
-            },
-            POSITIVACAOCLI:
-            {
-                REPORTID:4
-            }
-        };
-        
-        let contentLinesPillar = [];
-        let data = [];
-        let key = '';
-        for(let i in reportData) {
-            let options = {
-                method: 'post',
-                body: JSON.stringify({         
-                    dates: ["2024-10-01","2024-10-31"],
-                    seller_ids:req.body.coduser,
-                    ...reportData[i]
-                }),
-            method:'post',
-            headers:{
-                Accept:"application/json",
-                "Content-type":"application/json",
-                Authorization: process.env.AUTH
-            }
-            };
-            //console.log(reportData[i])
-            const url = "http://192.168.2.151:3004/api/controllers/modules/reports/reportscontroller/getData"
-            const response = await fetch(url, options);
-            const responseJson = await response.json();
-            const dataArray = responseJson.data[0];
-            data = dataArray;
-            //console.log(dataArray);
-            //console.log(`Dados para ${i}`, responseJson, reportData[i]);
-                for (i = 0; i < Object.keys(data).length; i++) {
-                    key = Object.keys(data)[i];  // Ensure proper checks
-                    console.log(dataArray)            
-            
-
-                contentLinesPillar.push(`
-                    <tr>
-                        <td><text class="content-center">${key}</text></td>
-                        <td><text class="content-center">${data[key]}</text></td>
-                        <td><text class="content-center"></text></td>
-                    </tr>
-                `);
+        try{
+            const reportData = {
+                CRITPART:{
+                    REPORTID:1
+                },    
+                DEVOLUCOES:
+                {
+                    REPORTID:3
+                },
+                RATINGS:
+                {
+                    REPORTID:2
+                },
+                POSITIVACAOCLI:
+                {
+                    REPORTID:4
                 }
             };
+            
+            let contentLinesPillar = [];
+            let contentLinesInf = [];
+            let contentLinesdates = [];
+
+            let month = req.body.month;
+            let monthSelection;
+                if(month != null && month != ' ' && month != '') {
+                    if(month == '1'){
+                        monthSelection = ["2024-01-01","2024-01-31"]
+                    }
+                    if(month == '2'){
+                        monthSelection = ["2024-02-01","2024-02-29"]
+                    }
+                    if(month == '3'){
+                        monthSelection = ["2024-03-01","2024-03-31"]
+                    }
+                    if(month == '4'){
+                        monthSelection = ["2024-04-01","2024-04-30"]
+                    }
+                    if(month == '5'){
+                        monthSelection = ["2024-05-01","2024-05-31"]
+                    }
+                    if(month == '6'){
+                        monthSelection = ["2024-06-01","2024-06-30"]
+                    }
+                    if(month == '7'){
+                        monthSelection = ["2024-07-01","2024-07-31"]
+                    }
+                    if(month == '8'){
+                        monthSelection = ["2024-08-01","2024-08-31"]
+                    }
+                    if(month == '9'){
+                        monthSelection = ["2024-09-01","2024-09-30"]
+                    }
+                    if(month == '10'){
+                        monthSelection = ["2024-10-01","2024-10-31"]
+                    }
+                    if(month == '11'){
+                        monthSelection = ["2024-05-01","2024-11-30"]
+                    }
+                    if(month == '12'){
+                        monthSelection = ["2024-12-01","2024-12-31"]
+                    }
+                }
+                console.log(monthSelection)
+            for(let i in reportData) {
+                console.log('xxxxxx', i , reportData[i])
+                let options = {
+                    method: 'post',
+                    body: JSON.stringify({         
+                        dates: monthSelection,
+                        seller_ids:req.body.coduser,
+                        ...reportData[i]
+                    }),
+                    headers:{
+                        Accept:"application/json",
+                        "Content-type":"application/json",
+                        Authorization:process.env.AUTH
+                    }
+                };
+                //console.log(reportData[i])
+                const url = "http://192.168.2.151:3004/api/controllers/modules/reports/reportscontroller/getData"
+                const response = await fetch(url, options);
+                const responseJson = await response.json();
+            
+               switch (reportData[i].REPORTID) {
+                    case 1://criterio
+                            contentLinesInf.push(`
+                                    <tr>
+                                        <td><text >NOME:  ${responseJson.data[0][`RCA`]}</text></td>
+                                        <td><text >CODRCA:  ${responseJson.data[0][`CODRCA`]}</text></td>
+                                        <td><text >SUPERVISOR:  ${responseJson.data[0][`SUPERVISOR`]}</text></td>
+                                        <td><text >MES:  ${responseJson.data[0][`MES`]}</text></td>
+                                    </tr>
+                                `)        
+
+
+                            let RestantePeso = responseJson.data[0][`'p1'_PESO`] - responseJson.data[0][`'p2'_PESO`]
+                            let RestanteValor = responseJson.data[0][`'p1'_VALOR`] - responseJson.data[0][`'p2'_VALOR`]
+                            contentLinesdates.push(`
+                                <tr>
+                                    <td><text class="content-center">Peso</text></td>
+                                    <td><text class="content-center">${responseJson.data[0][`'p1'_PESO`].toLocaleString('pt-BR', { minimumIntegerDigits: 2, minimumFractionDigits: 2,maximumFractionDigits: 2 })}</text></td>
+                                    <td><text class="content-center">${responseJson.data[0][`'p2'_PESO`].toLocaleString('pt-BR', { minimumIntegerDigits: 2, minimumFractionDigits: 2,maximumFractionDigits: 2 })}</text></td>
+                                    <td><text class="content-center">${RestantePeso.toLocaleString('pt-BR', { minimumIntegerDigits: 2, minimumFractionDigits: 2,maximumFractionDigits: 2 })}</text></td>
+                                </tr>
+                                <tr>
+                                    <td><text class="content-center">Valor</text></td>
+                                    <td><text class="content-center">${responseJson.data[0][`'p1'_VALOR`].toLocaleString('pt-BR', { minimumIntegerDigits: 2, minimumFractionDigits: 2,maximumFractionDigits: 2 })}</text></td>
+                                    <td><text class="content-center">${responseJson.data[0][`'p2'_VALOR`].toLocaleString('pt-BR', { minimumIntegerDigits: 2, minimumFractionDigits: 2,maximumFractionDigits: 2 })}</text></td>
+                                    <td><text class="content-center">${RestanteValor.toLocaleString('pt-BR', { minimumIntegerDigits: 2, minimumFractionDigits: 2,maximumFractionDigits: 2 })}</text></td>
+                                </tr>    
+                                
+                            `);
+                        
+                        break;
+                        case 2:// rattings
+                        console.log('xxxxxxxxxx ',responseJson.data[0])
+                        for (let d in  responseJson.data[0]){
+                              // Ensure proper checks
+                            let pillarName = null;  
+                            
+                            if(d.indexOf('M_') === 0 && d != 'M_PESO'){
+                                pillarName = d.substring(2)
+                                contentLinesPillar.push(`
+                                    <tr>
+                                        <td><text class="content-center">${pillarName}</text></td>
+                                        <td><text class="content-center">${responseJson.data[0][d].toLocaleString('pt-BR', { minimumIntegerDigits: 2, minimumFractionDigits: 2,maximumFractionDigits: 2 })}</text></td>
+                                        <td><text class="content-center">${responseJson.data[0][`V_${pillarName}`]}</text></td>
+                                        <td><text class="content-center">${responseJson.data[0][`P_${pillarName}`]}</text></td>
+                                    </tr>
+                                `);
+                            }
+                        };
+                        break;
+                        case 3://devolução
+                           
+                        break;
+                        case 4: //POSITIVAÇÃOI
+
+                        break;
+                    default:
+                        break;
+                }
+                
+            }
+            
             let content = 
                 `
                 <style>
@@ -134,117 +220,41 @@ class campaignSynergy{
                         <table>
                             <h1 style="text-align: center;">Campanha Sinergia</h1>
                             <tr>
-                                <td>
-                                    <text class="content">
-                                        ${RCA[key]}
-                                    </text>
-                                </td>
-                                <td>
-                                    <text class="content">
-                                        ${data?.SUPERVISOR}
-                                    </text>
-                                </td>
-                                <td>
-                                    <text class="content">
-                                        ${data?.RCA}
-                                    </text>
-                                </td>
-                                <td>
-                                    <text class="content">
-                                        ${data?.CODRCA}
-                                    </text>
-                                </td>
-                                <td>
-                                    <text class="content">
-
-                                    </text>
-                                </td>
+                                <tbody>
+                                ${contentLinesInf.join("")}
+                                </tbody>
                             </tr>
                         </table>
                         <table>
                             <h2 style="text-align: center;">Criterio de participação</h2>
                             <tr>
-                                <td colspan="3">
+                                <td class="notbordered">
                                     <text class="content-center">
-                                        Peso
+                                    
                                     </text>
                                 </td>
-                                <td colspan="3">
+                                <td>
                                     <text class="content-center">
-                                        Valor
+                                        Anterior
                                     </text>
                                 </td>
+                                <td>
+                                    <text class="content-center">
+                                        Atual
+                                    </text>
+                                </td>
+                                <td>
+                                    <text class="content-center">
+                                        Restante para objetivo
+                                    </text>
                             </tr>
-                            <tr>
-                                <td>
-                                    <text class="content-center" >
-                                        Objetivo
-                                    </text>
-                                </td>
-                                <td>
-                                    <text class="content-center">
-                                        Realizado
-                                    </text>
-                                </td>
-                                <td>
-                                    <text class="content-center">
-                                        Falta
-                                    </text>
-                                </td>
-                                <td>
-                                    <text class="content-center">
-                                        Objetivo
-                                    </text>
-                                </td>
-                                <td>
-                                    <text class="content-center">
-                                        Realizado
-                                    </text>
-                                </td>
-                                <td>
-                                    <text class="content-center">
-                                        Falta
-                                    </text>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <text class="content-center">
-                                        0
-                                    </text>
-                                </td>
-                                <td>
-                                    <text class="content-center">
-                                        0
-                                    </text>
-                                </td>
-                                <td>
-                                    <text class="content-center">
-                                        0
-                                    </text>
-                                </td>
-                                <td>
-                                    <text class="content-center">
-                                        R$0,00
-                                    </text>
-                                </td>
-                                <td>
-                                    <text class="content-center">
-                                        R$0,00
-                                    </text>
-                                </td>
-                                <td>
-                                    <text class="content-center">
-                                        R$0,00
-                                    </text>
-                                </td>
-                            </tr>
+                                ${contentLinesdates.join("")}
                         </table>
                         <table>
                             <tr>
                                 <td class="notbordered">
                                     <text  class="content-center">
-                                        &nbsp;
+                                    Pilar
                                     </text>
                                 </td>
                                 <td>
@@ -257,6 +267,11 @@ class campaignSynergy{
                                         Realizado
                                     </text>
                                 </td>
+                                <td>
+                                    <text class="content-center">
+                                        Pontos
+                                    </text>
+                                </td>
                             </tr>
                             <tbody>
                             ${contentLinesPillar.join("")}
@@ -264,16 +279,22 @@ class campaignSynergy{
                         </table>
                     </body>
                     </html>
-                    `;
-                    pdf.create(content, {
-                    }).toFile("./SynergyCampaign.pdf",(err,res) => {
-                        if(err){
-                            console.log('erro :(');
-                        }else{
-                            console.log(res);
-                        }
-                    })
+            `;
+            res.status(200).json()
+            pdf.create(content, {
+            }).toFile("./SynergyCampaign.pdf",(err,res) => {
+                if(err){
+                    console.log('erro :(');
+                }else{
+                    console.log(res);
                 }
-            }
+            })
+        } catch (error) {
+            console.log(error);
+            res.status(517).json({message: error.message})
+            
+        }
+    }
+}
         
 module.exports = campaignSynergy;

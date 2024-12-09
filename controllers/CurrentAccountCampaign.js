@@ -364,8 +364,9 @@ class currentAccountCampaign {
                 console.log(res);
               }
           })
-          res.status(200).json(content)
-      }catch{
+          res.status(200).send(content)
+      }catch(e){
+        console.log(e)
         res.status(517).json("failled")
       }
     }else{

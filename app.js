@@ -14,6 +14,7 @@ const MonthCampagn = require('./controllers/MonthCampagn.js');
 const City_Service = require('./controllers/City_Service.js');
 const Titles = require('./controllers/Titles.js');
 const CustumizedReport = require('./controllers/custumizedreport.js');
+const campaignSynergy = require('./controllers/campaignSynergy.js');
 
 
 app.use(bodyParser.json()) 
@@ -34,6 +35,8 @@ app.post('/api/rca/choice_month',MonthCampagn.monthCampagn)//escolha do mes
 app.post('/api/rca/listcampagnvig',CampanhaRca.campagnVig)//listagem campanha
 
 app.post('/api/rca/campagnchosen',ReturnCampagn.campagnChosen)//Campanhas escolhida
+
+app.post('/api/rca/getdatessynergy',campaignSynergy.getDatesSynergy)
 
 app.post('/api/client/opentitles',Titles.openTitles)//Titulos em aberto
 

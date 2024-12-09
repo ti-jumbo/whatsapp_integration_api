@@ -5,7 +5,7 @@ require('dotenv').config
 
 class CustumizedReport {
 
-    static async salesDisruption(req, res) {
+    static async noPurchase(req, res) {
         const date = req.body.date;
         let option = req.body.option;
         let day;

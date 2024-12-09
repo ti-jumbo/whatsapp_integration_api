@@ -45,7 +45,7 @@ app.post('/api/client/opentitles',Titles.openTitles)//Titulos em aberto
 
 app.post('/api/client/unpaidtitles',Titles.unpaidTitle)//Titulos em a vencer
 
-app.post('/api/client/salesDisruption',CustumizedReport.salesDisruption)//Titulos em a vencer
+app.post('/api/client/salesDisruption',CustumizedReport.noPurchase)//Titulos em a vencer
 
 app.post('/api/client/secondCopyBill',secondCopyBill)//segunda copia boleto
 

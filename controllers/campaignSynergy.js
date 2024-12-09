@@ -280,7 +280,7 @@ class campaignSynergy{
                     </body>
                     </html>
             `;
-            res.status(200).json()
+            res.status(200).json(content)
             pdf.create(content, {
             }).toFile("./SynergyCampaign.pdf",(err,res) => {
                 if(err){

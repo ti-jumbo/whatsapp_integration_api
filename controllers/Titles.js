@@ -36,7 +36,7 @@ class Titles{
         
     }
     static async unpaidTitle(req, res, next) {
-        
+        try{
        /* const validateDate = (date, format) => {
             const regexFormats = {
                 'DD/MM/YYYY': /^\d{2}\/\d{2}\/\d{4}$/,
@@ -69,7 +69,7 @@ class Titles{
         
 
     if (validateDate(req.body.date, 'DD/MM/YYYY')) {
-        try {
+        
             const formatDateToISO = (date) => {
                 const [day, month, year] = date.split('/');
                 return `${year}-${month}-${day}`;
@@ -78,7 +78,9 @@ class Titles{
             if (validateDate(req.body.date, 'DD/MM/YYYY')) {
                 req.body.date = formatDateToISO(req.body.date); // Reformata para YYYY-MM-DD
             }*/
+                
             let response = await DBConnectionMenager.getWhintorConnection().query(`
+                
                 SELECT
                     PP.CODCLI,
                     PC.CLIENTE,
@@ -154,13 +156,14 @@ class Titles{
                 res.status(400).json({message: "parameter invalid"})
             }
         
-    /*    } catch (error) {
-            console.error("Error consult da:", error.message);
-            res.status(500).json({ message: "Error requirements database." });
-        }
+    /*    
      }else {
         res.status(400).json({ message: "date invalid." });
-    }  */  
+    }  */
+    } catch (e) {
+        console.error("Error consult da:", e);
+        res.status(500).json({ message: "Error requirements database." });
+    }  
     }
 }
 module.exports = Titles;

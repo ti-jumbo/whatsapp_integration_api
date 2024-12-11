@@ -6,6 +6,7 @@ require('dotenv').config
 class CustumizedReport {
 
     static async noPurchase(req, res) {
+        try{
         const date = req.body.date;
         let option = req.body.option;
         let day;
@@ -271,6 +272,10 @@ class CustumizedReport {
         } else {
             res.status(400).json('Parameter invalid')
         }
+    }catch(e){
+        console.log(e)
+        res.status(400).json(e)
+    }
     }
 }
 

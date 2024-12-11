@@ -32,35 +32,33 @@ app.use(CheckAcessController.checkAcess)
 app.use(CheckAcessController.checkAcessUser)
 
 
-app.post('/api/rca/getmonth',CampagnRca.optionMonth)//listagem do mes
+app.post('/api/rca/get_month',CampagnRca.optionMonth)//listagem do mes
 
-app.post('/api/rca/choicemonth',MonthCampagn.monthCampagn)//escolha do mes
+app.post('/api/rca/choice_month',MonthCampagn.monthCampagn)//escolha do mes
 
-app.post('/api/rca/listcampagnvig',CampanhaRca.campagnVig)//listagem campanha
+app.post('/api/rca/list_campagn_vig',CampanhaRca.campagnVig)//listagem campanha
 
-app.post('/api/rca/campagnchosen',ReturnCampagn.campagnChosen)//Campanhas escolhida
+app.post('/api/rca/campagn_chosen',ReturnCampagn.campagnChosen)//Campanhas escolhida
 
-app.post('/api/rca/getdatessynergy',campaignSynergy.getDatesSynergy)//Sinergia  
+app.post('/api/rca/get_dates_synergy',campaignSynergy.getDatesSynergy)//Sinergia  
 
-app.post('/api/rca/getdatesaccount',currentAccountCampaign.getDateAccount)//Conta corrente
+app.post('/api/rca/get_dates_account',currentAccountCampaign.getDateAccount)//Conta corrente
 
-app.post('/api/rca/getbonus',bonus.bonif)//bonificação
+app.post('/api/rca/get_bonus',bonus.bonif)//bonificação
 
-app.post('/api/rca/redirectionrca',redirectionRca.redirection)//redirecionamento do cliente para o rca
+app.post('/api/rca/redirection_rca',redirectionRca.redirection)//redirecionamento do cliente para o rca
 
 app.post('/api/promoter/promoter',promoters.promoter)//identificação promotora
 
-app.post('/api/client/opentitles',Titles.openTitles)//Titulos em aberto
+app.post('/api/client/open_titles',Titles.openTitles)//Titulos em aberto
 
-app.post('/api/client/unpaidtitles',Titles.unpaidTitle)//Titulos em a vencer
+app.post('/api/client/unpaid_titles',Titles.unpaidTitle)//Titulos em a vencer
 
-app.post('/api/client/salesdisruption',CustumizedReport.noPurchase)//Titulos em a vencer
+app.post('/api/client/sales_disruption',CustumizedReport.noPurchase)//Titulos em a vencer
 
-app.post('/api/client/billcontroller',BoletoController.getBillPdf)//boleto PDF
+app.post('/api/client/bill_controller',BoletoController.getBillPdf)//boleto PDF
 
-app.post('/api/client/nfcontroller',nf_controller.NF)//nota fiscal
-
-app.post('/api/user/checkuser', async function(req,res,next){
+app.post('/api/user/check_user', async function(req,res,next){
 //checa se  o usuario existe
 
     res.status(200).json(req.loggedUser)
@@ -69,7 +67,7 @@ app.post('/api/user/checkuser', async function(req,res,next){
 app.post('/api/user/login', async function(req,res,next){//checa se o ususario está logado
     res.status(200).json(req.loggedUser)
 })
-app.post('/api/user/cityservice', City_Service.city)//informa se atendemos a cidade informada
+app.post('/api/user/city_service', City_Service.city)//informa se atendemos a cidade informada
 
 app.listen(process.env.SERVERPORT, () => {
     console.log(`Server is running ON PORT${process.env.SERVERPORT}`)

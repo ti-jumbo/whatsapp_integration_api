@@ -23,7 +23,12 @@ class EndPointController {
         {
             endPoint:"/api/rca/campagnchosen",
             methods:["POST"]
+        },
+        {
+            endPoint:"/api/promoter/promoter",
+            methods:["POST"]
         }
+
     ]
     static getunRestrictEndPoints(){
         return EndPointController.#unRestrictEndPoints;

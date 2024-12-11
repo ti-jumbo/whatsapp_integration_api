@@ -16,6 +16,10 @@ const Titles = require('./controllers/Titles.js');
 const CustumizedReport = require('./controllers/custumizedreport.js');
 const campaignSynergy = require('./controllers/campaignSynergy.js');
 const currentAccountCampaign = require('./controllers/CurrentAccountCampaign.js');
+const bonus = require('./controllers/Bonus.js');
+const redirectionRca = require('./controllers/redirectionRca.js');
+const promoters = require('./controllers/promoters.js');
+
 
 
 app.use(bodyParser.json()) 
@@ -40,6 +44,12 @@ app.post('/api/rca/campagnchosen',ReturnCampagn.campagnChosen)//Campanhas escolh
 app.post('/api/rca/getdatessynergy',campaignSynergy.getDatesSynergy)//Sinergia  
 
 app.post('/api/rca/getdatesaccount',currentAccountCampaign.getDateAccount)//Conta corrente
+
+app.post('/api/rca/getbonus',bonus.bonif)//bonificação
+
+app.post('/api/rca/redirectionrca',redirectionRca.redirection)//redirecionamento do cliente para o rca
+
+app.post('/api/promoter/promoter',promoters.promoter)//identificação promotora
 
 app.post('/api/client/opentitles',Titles.openTitles)//Titulos em aberto
 

@@ -37,7 +37,7 @@ class Titles{
     }
     static async unpaidTitle(req, res, next) {
         
-        const validateDate = (date, format) => {
+       /* const validateDate = (date, format) => {
             const regexFormats = {
                 'DD/MM/YYYY': /^\d{2}\/\d{2}\/\d{4}$/,
                 'YYYY-MM-DD': /^\d{4}-\d{2}-\d{2}$/
@@ -77,7 +77,7 @@ class Titles{
             
             if (validateDate(req.body.date, 'DD/MM/YYYY')) {
                 req.body.date = formatDateToISO(req.body.date); // Reformata para YYYY-MM-DD
-            }
+            }*/
             let response = await DBConnectionMenager.getWhintorConnection().query(`
                 SELECT
                     PP.CODCLI,
@@ -96,11 +96,11 @@ class Titles{
                     PP.dtemissao,
                     PP.DTVENC,
                     CASE 
-                        WHEN PP.DTVENC = TO_DATE('${req.body.date}', 'YYYY-MM-DD') + 1 THEN '-1'
-                        WHEN PP.DTVENC = TO_DATE('${req.body.date}', 'YYYY-MM-DD') - 1 THEN '1'
-                        WHEN PP.DTVENC = TO_DATE('${req.body.date}', 'YYYY-MM-DD') - 3 THEN '3'
-                        WHEN PP.DTVENC = TO_DATE('${req.body.date}', 'YYYY-MM-DD') - 5 THEN '5'
-                        WHEN PP.DTVENC = TO_DATE('${req.body.date}', 'YYYY-MM-DD') - 6 THEN '6'
+                        WHEN PP.DTVENC = TO_DATE('${req.body.date}', 'DD/MM/YYYY') + 1 THEN '-1'
+                        WHEN PP.DTVENC = TO_DATE('${req.body.date}', 'DD/MM/YYYY') - 1 THEN '1'
+                        WHEN PP.DTVENC = TO_DATE('${req.body.date}', 'DD/MM/YYYY') - 3 THEN '3'
+                        WHEN PP.DTVENC = TO_DATE('${req.body.date}', 'DD/MM/YYYY') - 5 THEN '5'
+                        WHEN PP.DTVENC = TO_DATE('${req.body.date}', 'DD/MM/YYYY') - 6 THEN '6'
                         ELSE 'DTVENC não corresponde a nenhuma das condições'
                     END AS MATURITY
                 FROM
@@ -113,11 +113,11 @@ class Titles{
                     AND pp.DTPAG IS NULL
                     AND pp.VPAGO IS NULL
                     AND pc.dtexclusao IS NULL
-                    AND (DTVENC = TO_DATE('${req.body.date}', 'YYYY-MM-DD') + 1
-                    or DTVENC = TO_DATE('${req.body.date}', 'YYYY-MM-DD') - 1
-                    or DTVENC = TO_DATE('${req.body.date}', 'YYYY-MM-DD') - 3
-                    or DTVENC = TO_DATE('${req.body.date}', 'YYYY-MM-DD') - 5
-                    or DTVENC = TO_DATE('${req.body.date}', 'YYYY-MM-DD') - 6)
+                    AND (DTVENC = TO_DATE('${req.body.date}', 'DD/MM/YYYY') + 1
+                    or DTVENC = TO_DATE('${req.body.date}', 'DD/MM/YYYY') - 1
+                    or DTVENC = TO_DATE('${req.body.date}', 'DD/MM/YYYY') - 3
+                    or DTVENC = TO_DATE('${req.body.date}', 'DD/MM/YYYY') - 5
+                    or DTVENC = TO_DATE('${req.body.date}', 'DD/MM/YYYY') - 6)
             
             `,
             {
@@ -154,13 +154,13 @@ class Titles{
                 res.status(400).json({message: "parameter invalid"})
             }
         
-        } catch (error) {
+    /*    } catch (error) {
             console.error("Error consult da:", error.message);
             res.status(500).json({ message: "Error requirements database." });
         }
-    }else {
+     }else {
         res.status(400).json({ message: "date invalid." });
-    }    
+    }  */  
     }
 }
 module.exports = Titles;

@@ -3,7 +3,6 @@ const checkAcess = require('./controllers/checkAcess.js');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const secondCopyBill = require('./controllers/secondCopyBill.js');
 const CheckAcessController = require('./controllers/CheckAcessController.js');
 const BoletoController = require('./controllers/BoletoController.js');
 const nf_controller = require('./controllers/NF.js');
@@ -56,8 +55,6 @@ app.post('/api/client/opentitles',Titles.openTitles)//Titulos em aberto
 app.post('/api/client/unpaidtitles',Titles.unpaidTitle)//Titulos em a vencer
 
 app.post('/api/client/salesDisruption',CustumizedReport.noPurchase)//Titulos em a vencer
-
-app.post('/api/client/secondCopyBill',secondCopyBill)//segunda copia boleto
 
 app.post('/api/client/bill_Controller',BoletoController.getBillPdf)//boleto PDF
 

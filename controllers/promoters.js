@@ -11,13 +11,13 @@ class promoters{
                     FROM
                         PROMOTERS
                     WHERE 
-                        CAST(REGEXP_REPLACE(TELEFONE, '[^0-9]', '') AS UNSIGNED) = CAST(REGEXP_REPLACE('', '[^0-9]', '') AS UNSIGNED);
+                        CAST(REGEXP_REPLACE(TELEFONE, '[^0-9]', '') AS UNSIGNED) = CAST(REGEXP_REPLACE('${req.body.phone}', '[^0-9]', '') AS UNSIGNED);
                     `,
                     {
                         type: QueryTypes.SELECT
                     }
                 );
-                if(db.length > 0 && db != null){
+                if(db.length > 0){
                     console.log(db)
                     res.status(200).json(db)
                 }else{

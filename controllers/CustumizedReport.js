@@ -11,7 +11,7 @@ class CustumizedReport {
         let option = req.body.option;
         let day;
 
-        if (date !== null & date !== undefined & date !== '' & date !== ' ' & option !== null & option !== undefined & option !== '' & option !== ' ') {
+        if (date !== null && date !== undefined && date !== '' & date !== ' ' && option !== null && option !== undefined && option !== '' && option !== ' ') {
             switch (option) {
                 case "1":
                     day = 30

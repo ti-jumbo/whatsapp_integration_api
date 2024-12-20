@@ -18,6 +18,7 @@ const currentAccountCampaign = require('./controllers/CurrentAccountCampaign.js'
 const bonus = require('./controllers/Bonus.js');
 const redirectionRca = require('./controllers/redirectionRca.js');
 const promoters = require('./controllers/promoters.js');
+const CheckClient = require('./controllers/checkClient.js');
 
 
 
@@ -68,6 +69,8 @@ app.post('/api/user/login', async function(req,res,next){//checa se o ususario e
     res.status(200).json(req.loggedUser)
 })
 app.post('/api/user/city_service', City_Service.city)//informa se atendemos a cidade informada
+
+app.post('/api/user/check_client', CheckClient.checkClient)
 
 app.listen(process.env.SERVERPORT, () => {
     console.log(`Server is running ON PORT${process.env.SERVERPORT}`)

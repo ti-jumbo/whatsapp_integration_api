@@ -17,6 +17,8 @@ class redirectionRca{
                         PC.CODCLI,
                         PC.CLIENTE,
                         PC.CODUSUR1,
+                        PU.NOME,
+                        PU.EMAIL,
                         PU.TELEFONE1,
                         PU.TELEFONE2,
                         CASE

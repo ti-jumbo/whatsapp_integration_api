@@ -9,26 +9,22 @@ class EndPointController {
             
         },
         {
-            endPoint:"/api/rca/get_month",
-            methods:["POST"]
-        },
-        {
-            endPoint:"/api/rca/listcampagnvig",
-            methods:["POST"]
-        },
-        {
             endPoint:"/api/rca/choice_month",
-            methods:["POST"]
-        },
-        {
-            endPoint:"/api/rca/campagnchosen",
             methods:["POST"]
         },
         {
             endPoint:"/api/promoter/promoter",
             methods:["POST"]
-        }
-
+        },
+        {
+            endPoint:"/api/client/unpaid_titles",
+            methods:["POST"]
+        },
+        {
+            endPoint:"/api/client/sales_disruption",
+            methods:["POST"]
+        }    
+          
     ]
     static getunRestrictEndPoints(){
         return EndPointController.#unRestrictEndPoints;

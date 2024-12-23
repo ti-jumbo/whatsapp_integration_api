@@ -27,10 +27,10 @@ class CheckClient {
                     }
                 )
                
-                if (checkClient.length > 0) {
-                    res.status(200).json(checkClient);
+                if (!checkClient.length) {
+                    res.status(404).json({ message: 'Not found' }); 
                 } else {
-                    res.status(404).json({ message: 'Not found' });
+                    res.status(200).json(checkClient);
                 }
             } else {
                 res.status(400).json({ message: 'Invalid client code' });

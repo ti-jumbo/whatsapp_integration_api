@@ -76,8 +76,10 @@ class CheckAcessController{
                                     query,
                                     {
                                         type: QueryTypes.SELECT
-                                    }
+                                    },
+                                    
                                 )
+                                console.log('AAAA',user[0].CODFILIAL)
                                 if(user.length > 0){
                                     if(user[0].FONECORRECT) {
                                         const resultInsert = await DBConnectionMenager.getDefaultConnection().query(`
@@ -85,12 +87,15 @@ class CheckAcessController{
                                                     phone_number,
                                                     document,
                                                     user_winthor_id,
-                                                    user_type_id
+                                                    user_type_id,
+                                                    cod_filial
                                                 )values(
                                                     cast(regexp_replace('${req.body.phone}','[^0-9]','') as decimal(32)),
                                                     cast(regexp_replace('${req.body.document}','[^0-9]','') as decimal(32)),
                                                     ${user[0].USERID},
-                                                    ${req.body.user_type}
+                                                    ${req.body.user_type},
+                                                    ${user[0].CODFILIAL}
+
                                                 )`,
                                             {
                                                 type: QueryTypes.INSERT

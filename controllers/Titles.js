@@ -9,6 +9,7 @@ class Titles{
             const duplicate = await DBConnectionMenager.getWhintorConnection().query(`
                 SELECT 
                     C.CODCLI,
+                    P.CODFILIAL,
                     P.DUPLIC,
                     P.PREST,
                     P.VALOR
@@ -97,6 +98,7 @@ class Titles{
                     PP.STATUS,
                     PP.dtemissao,
                     PP.DTVENC,
+                    PP.LINHADIG,
                     CASE 
                         WHEN PP.DTVENC = TO_DATE('${req.body.date}', 'DD/MM/YYYY') + 1 THEN '-1'
                         WHEN PP.DTVENC = TO_DATE('${req.body.date}', 'DD/MM/YYYY') - 1 THEN '1'

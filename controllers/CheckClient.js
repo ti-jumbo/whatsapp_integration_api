@@ -13,6 +13,7 @@ class CheckClient {
                 const checkClient = await DBConnectionMenager.getWhintorConnection().query(`
                     SELECT
                         CODCLI,
+                        CODFILIAL,
                         CLIENTE,
                         TELCOB
                     FROM

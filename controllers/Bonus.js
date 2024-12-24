@@ -22,6 +22,7 @@ class bonus{
                 LEFT OUTER JOIN PCMOV PM ON PS.NUMTRANSVENDA = PM.NUMTRANSVENDA
             WHERE
                 PS.CODUSUR = '${req.body.coduser}'
+                AND PS.CODCLI = '${req.body.codcli}'
                 AND PS.DTSAIDA > TO_DATE('${req.body.startdate}', 'DD/MM/YYYY')
                 AND PS.DTSAIDA < TO_DATE('${req.body.enddate}', 'DD/MM/YYYY')
                 AND PM.CODOPER = 'SB';

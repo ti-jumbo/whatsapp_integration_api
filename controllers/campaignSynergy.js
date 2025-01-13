@@ -150,137 +150,136 @@ class campaignSynergy{
                 
             }
             
-            let content = 
-                `
+            let content = `<!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Document</title>
                 <style>
-                    table {
-                    width: calc(100% - 2cm);
-                    border-collapse: collapse;
-                    margin: 1cm;
-                    }
-                    tbody {
-                    width: 100%;
-                    }
-                    tr {
-                    width: 100%;
-                    }
-                    td {
-                    font-size: 14;
-                    font-weight: bolder;
-                    border: 1px solid black;
-                    vertical-align: top;
-                    }
-                    td.notbordered {
-                    border: none !important
-                    }
-                    td text.header {
-                    display: block;
-                    font-size: 8;    
-                    }
-                    td text.content {
-                    display: block;
-                    }
-                    td text.content-center {
-                    text-align: center;
-                    display: block;
-                    }
-                    td.first {
-                    width: 4cm;
-                    }
-                    td.align {
-                    text-align: right;
-                    width:5%;
-                    }
-                    td.last {
-                    width: 6cm;
-                    }
-                    td.last text.content {
-                    text-align: right;
-                    width: 100%;
-                    }
-                    td.container img {
-                    max-width:4cm;
-                    max-height:2cm;
-                    }
-                    #Color-intuitive{
-                        width: 200px;
-                        height: 200px;
-                        background-color: lightgray;
-                    }
-                    </style>
+            table {
+            width: calc(100% - 2cm);
+            border-collapse: collapse;
+            margin: 1cm;
+            }
+            tbody {
+            width: 100%;
+            }
+            tr {
+            width: 100%;
+            }
+            td {
+            font-size: 14;
+            font-weight: bolder;
+            border: 1px solid black;
+            vertical-align: top;
+            }
+            td.notbordered {
+            border: none !important
+            }
+            td text.header {
+            display: block;
+            font-size: 8;    
+            }
+            td text.content {
+            display: block;
+            }
+            td text.content-center {
+            text-align: center;
+            display: block;
+            }
+            td.first {
+            width: 4cm;
+            }
+            td.align {
+            text-align: right;
+            width:5%;
+            }
+            td.last {
+            width: 6cm;
+            }
+            td.last text.content {
+            text-align: right;
+            width: 100%;
+            }
+            td.container img {
+            max-width:4cm;
+            max-height:2cm;
+            }
+            #Color-intuitive{
+                width: 200px;
+                height: 200px;
+                background-color: lightgray;
+            }
+            </style>
 
-                    <!DOCTYPE html>
-                    <html lang="en">
-                    <head>
-                        <meta charset="UTF-8">
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <title>Document</title>
-                    </head>
-                    <body>
-                        <table>
-                            <h1 style="text-align: center;">Campanha Sinergia</h1>
-                            <tr>
-                                <tbody>
-                                ${contentLinesInf.join("")}
-                                </tbody>
-                            </tr>
-                        </table>
-                        <table>
-                            <h2 style="text-align: center;">Criterio de participação</h2>
-                            <tr>
-                                <td class="notbordered">
-                                    <text class="content-center">
-                                    
-                                    </text>
-                                </td>
-                                <td>
-                                    <text class="content-center">
-                                        Anterior
-                                    </text>
-                                </td>
-                                <td>
-                                    <text class="content-center">
-                                        Atual
-                                    </text>
-                                </td>
-                                <td>
-                                    <text class="content-center">
-                                        Restante para objetivo
-                                    </text>
-                            </tr>
-                                ${contentLinesdates.join("")}
-                        </table>
-                        <table>
-                            <tr>
-                                <td class="notbordered">
-                                    <text  class="content-center">
-                                    Pilar
-                                    </text>
-                                </td>
-                                <td>
-                                    <text class="content-center">
-                                        Média
-                                    </text>
-                                </td>
-                                <td>
-                                    <text class="content-center">
-                                        Realizado
-                                    </text>
-                                </td>
-                                <td>
-                                    <text class="content-center">
-                                        Pontos
-                                    </text>
-                                </td>
-                            </tr>
-                            <tbody>
-                            ${contentLinesPillar.join("")}
-                            <tbody>
-                        </table>
-                    </body>
-                </html>
-            `;
+            </head>
+            <body>
+        
             
+                <table>
+                    <h1 style="text-align: center;">Campanha Sinergia</h1>
+                    <tr>
+                        <tbody>
+                        ${contentLinesInf.join("")}
+                        </tbody>
+                    </tr>
+                </table>
+                <table>
+                    <h2 style="text-align: center;">Criterio de participação</h2>
+                    <tr>
+                        <td class="notbordered">
+                            <text class="content-center">
+                            
+                            </text>
+                        </td>
+                        <td>
+                            <text class="content-center">
+                                Anterior
+                            </text>
+                        </td>
+                        <td>
+                            <text class="content-center">
+                                Atual
+                            </text>
+                        </td>
+                        <td>
+                            <text class="content-center">
+                                Restante para objetivo
+                            </text>
+                    </tr>
+                        ${contentLinesdates.join("")}
+                </table>
+                <table>
+                    <tr>
+                        <td class="notbordered">
+                            <text  class="content-center">
+                            Pilar
+                            </text>
+                        </td>
+                        <td>
+                            <text class="content-center">
+                                Média
+                            </text>
+                        </td>
+                        <td>
+                            <text class="content-center">
+                                Realizado
+                            </text>
+                        </td>
+                        <td>
+                            <text class="content-center">
+                                Pontos
+                            </text>
+                        </td>
+                    </tr>
+                    <tbody>
+                    ${contentLinesPillar.join("")}
+                    <tbody>
+                </table>
+            </body>
+        </html>
+    `;
             pdf.create(content, {
             }).toFile("./SynergyCampaign.pdf",(err,res) => {
                 if(err){
@@ -289,7 +288,7 @@ class campaignSynergy{
                     console.log(res);
                 }
             })
-            res.status(200).json(content)
+            res.status(200).send(content)
         } catch (error) {
             console.log(error);
             res.status(517).json({message: error.message})

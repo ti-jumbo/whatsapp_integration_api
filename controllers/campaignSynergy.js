@@ -84,7 +84,7 @@ class campaignSynergy{
                     }
                 };
                 //console.log(reportData[i])
-                const url = "http://192.168.2.151:3004/api/controllers/modules/reports/reportscontroller/getData"
+                const url = "http://192.168.2.151:3004/api/controllers/modules/reports/reportscontroller/get_data"
                 const response = await fetch(url, options);
                 const responseJson = await response.json();
             
@@ -278,9 +278,9 @@ class campaignSynergy{
                             <tbody>
                         </table>
                     </body>
-                    </html>
+                </html>
             `;
-            res.status(200).json(content)
+            
             pdf.create(content, {
             }).toFile("./SynergyCampaign.pdf",(err,res) => {
                 if(err){
@@ -289,6 +289,7 @@ class campaignSynergy{
                     console.log(res);
                 }
             })
+            res.status(200).json(content)
         } catch (error) {
             console.log(error);
             res.status(517).json({message: error.message})

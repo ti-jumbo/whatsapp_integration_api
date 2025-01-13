@@ -13,25 +13,26 @@ class CheckClient {
                 const checkClient = await DBConnectionMenager.getWhintorConnection().query(`
                     SELECT
                         CODCLI,
-                        CODFILIAL,
+                        CODFILIALNF,
                         CLIENTE,
                         TELCOB
                     FROM
                         PCCLIENT
                     WHERE
-                        CODCLI = '${codcli}'
-                        AND (CODUSUR1 = ${req.loggedUser.user_winthor_id} 
-                        or CODUSUR2 = ${req.loggedUser.user_winthor_id })
-                    `,
+                        CODCLI = '${codcli}'`
+                       // AND (CODUSUR1 = ${req.loggedUser.user_winthor_id} 
+                       // or CODUSUR2 = ${req.loggedUser.user_winthor_id })`
+                    ,
                     {
                         type: QueryTypes.SELECT
                     }
                 )
-               
-                if (!checkClient.length) {
-                    res.status(404).json({ message: 'Not found' }); 
-                } else {
+                console.log(checkClient)
+                if (checkClient.length > 0) {
                     res.status(200).json(checkClient);
+                    
+                } else {
+                    res.status(400).json({ message: 'Invalid client code' });
                 }
             } else {
                 res.status(400).json({ message: 'Invalid client code' });

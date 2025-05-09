@@ -13,12 +13,14 @@ const MonthCampagn = require('./controllers/MonthCampagn.js');
 const City_Service = require('./controllers/City_Service.js');
 const Titles = require('./controllers/Titles.js');
 const CustumizedReport = require('./controllers/custumizedreport.js');
-const campaignSynergy = require('./controllers/campaignSynergy.js');
+const campaignSynergy = require('./controllers/CampaignSynergy2024.js');
 const currentAccountCampaign = require('./controllers/CurrentAccountCampaign.js');
 const bonus = require('./controllers/Bonus.js');
 const redirectionRca = require('./controllers/redirectionRca.js');
 const promoters = require('./controllers/promoters.js');
 const CheckClient = require('./controllers/checkClient.js');
+const campaignSynergy2025 = require('./controllers/CampaignSynergy2025.js');
+const AvisoDesenvolvimento = require('./controllers/AvisoDesenvolvimento.js');
 
 
 
@@ -43,7 +45,7 @@ app.post('/api/rca/campagn_chosen',ReturnCampagn.campagnChosen)//Campanhas escol
 
 app.post('/api/rca/get_dates_synergy',campaignSynergy.getDatesSynergy)//Sinergia  
 
-app.post('/api/rca/get_dates_account',currentAccountCampaign.getDateAccount)//Conta corrente
+app.post('/api/rca/get_dates_account', AvisoDesenvolvimento.HTMLAviso)//Conta corrente
 
 app.post('/api/rca/get_bonus',bonus.bonif)//bonificação
 
@@ -71,6 +73,8 @@ app.post('/api/user/login', async function(req,res,next){//checa se o ususario e
 app.post('/api/user/city_service', City_Service.city)//informa se atendemos a cidade informada
 
 app.post('/api/user/check_client', CheckClient.checkClient)
+
+app.post('/api/user/sinergy_seller', campaignSynergy2025.campaignSynergy2025)//campanha sinergia 2025-EM DESENVOLVIMENTO
 
 app.listen(process.env.SERVERPORT, () => {
     console.log(`Server is running ON PORT${process.env.SERVERPORT}`)

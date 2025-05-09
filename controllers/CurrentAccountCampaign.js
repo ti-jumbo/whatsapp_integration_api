@@ -18,51 +18,51 @@ class currentAccountCampaign {
       if(month != null && month != ' ' && month != '') {
         if(month == '1'){
             nameMonth = 'Janeiro'
-            monthSelection = ["2024-01-01","2024-01-31"]
+            monthSelection = ["2025-01-01","2025-01-31"]
         }
         if(month == '2'){
             nameMonth = 'Fevereiro'
-            monthSelection = ["2024-02-01","2024-02-29"]
+            monthSelection = ["2025-02-01","2025-02-29"]
         }
         if(month == '3'){
             nameMonth = 'Marco'
-            monthSelection = ["2024-03-01","2024-03-31"]
+            monthSelection = ["2025-03-01","2025-03-31"]
         }
         if(month == '4'){
             nameMonth = 'Abril'
-            monthSelection = ["2024-04-01","2024-04-30"]
+            monthSelection = ["2025-04-01","2025-04-30"]
         }
         if(month == '5'){
             nameMonth = 'Maio'
-            monthSelection = ["2024-05-01","2024-05-31"]
+            monthSelection = ["2025-05-01","2025-05-31"]
         }
         if(month == '6'){
             nameMonth = 'Junho'
-            monthSelection = ["2024-06-01","2024-06-30"]
+            monthSelection = ["2025-06-01","2025-06-30"]
         }
         if(month == '7'){
             nameMonth = 'Julho'
-            monthSelection = ["2024-07-01","2024-07-31"]
+            monthSelection = ["2025-07-01","2025-07-31"]
         }
         if(month == '8'){
             nameMonth = 'Agosto'
-            monthSelection = ["2024-08-01","2024-08-31"]
+            monthSelection = ["2025-08-01","2025-08-31"]
         }
         if(month == '9'){
             nameMonth = 'Setembro'
-            monthSelection = ["2024-09-01","2024-09-30"]
+            monthSelection = ["2025-09-01","2025-09-30"]
         }
         if(month == '10'){
             nameMonth = 'Outubro'
-            monthSelection = ["2024-10-01","2024-10-31"]
+            monthSelection = ["2025-10-01","2025-10-31"]
         }
         if(month == '11'){
             nameMonth = 'Novembro'
-            monthSelection = ["2024-05-01","2024-11-30"]
+            monthSelection = ["2025-05-01","2025-11-30"]
         }
         if(month == '12'){
             nameMonth = 'Dezembro'
-            monthSelection = ["2024-12-01","2024-12-31"]
+            monthSelection = ["2025-12-01","2025-12-31"]
         }
         // get date rca
         const getConnectionObj = await DBConnectionMenager.getDefaultConnection().query(
@@ -151,8 +151,8 @@ class currentAccountCampaign {
                   id: "IN"
                 },
                 selecteds: [
-                  {id: 503108}, {id: 503065
-                }]
+                  {id: 503108}, {id: 503365}
+                ]
               }]
             },
             "AURORA/REZENDE": {

@@ -1,6 +1,7 @@
 const { QueryTypes } = require("sequelize");
 const DBConnectionMenager = require("../database/DBConnectionMenager");
-const EndPointController = require("./EndPointController")
+const EndPointController = require("./EndPointController");
+const { hasValue } = require("@aalencarv/common-utils");
 
 class CheckAcessController{
         
@@ -48,13 +49,14 @@ class CheckAcessController{
                         type: QueryTypes.SELECT
                     }
                 );
-                console.log(userLogged)
-                if(userLogged.length > 0){
+                console.log('1',userLogged)
+                if(hasValue(userLogged)){
+                    console.log('aqui')
                     req.loggedUser = userLogged[0];
                     next()
                 }else{
-
-                    if(req.body.user_type != null && req.body.user_type != ""){
+                    console.log('aqui2')
+                    if(hasValue(req.body.user_type)){
                         const userType = await DBConnectionMenager.getDefaultConnection().query(`
                         SELECT
                             *
@@ -120,7 +122,7 @@ class CheckAcessController{
                                     res.status(401).json({message: req.url == '/api/user/login' ? 'user not exist': 'user not logged'})                        
                                 }
                             }else{
-                                res.status(401).json({message: req.url == '/api/user/login' ? 'missing document': 'user not logged'})
+                                res.status(401).json({message: req.url == '/api/user/login' ? 'missing document': 'user not logged e'})
                             }
                         }else{
                             res.status(401).json({message: req.url == '/api/user/login' ? 'user Type not found': 'user not logged'})

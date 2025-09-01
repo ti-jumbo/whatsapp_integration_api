@@ -9,7 +9,7 @@ class DBConnectionMenager{
 
     static getWhintorConnection(){
         if(DBConnectionMenager.#winthorConnection == null){
-            OracleDB.initOracleClient() 
+            OracleDB.initOracleClient({libDir: process.env.DB_ORA_LIB_DIR});
             
             DBConnectionMenager.#winthorConnection = new Sequelize({
                 'id':2,
@@ -49,7 +49,7 @@ class DBConnectionMenager{
 
     static getEpConnection(){
         if(DBConnectionMenager.#epConnection == null){
-            OracleDB.initOracleClient() 
+            OracleDB.initOracleClient({libDir: process.env.DB_ORA_LIB_DIR});
             
             DBConnectionMenager.#epConnection = new Sequelize({
                 'id':2,

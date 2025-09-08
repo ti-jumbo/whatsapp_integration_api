@@ -5,7 +5,7 @@ const { hasValue } = require("@aalencarv/common-utils");
 
 class CheckAcessController{
         
-        static checkAcess(req, res, next) {
+        static checkAcessWhatsapp(req, res, next) {
             console.log('init check whatsapp Acess midlleware');
             const basicText = req.headers.authorization?.split(' ')[0] || "";
             if(basicText != 'Basic'){
@@ -81,7 +81,7 @@ class CheckAcessController{
                                     },
                                     
                                 )
-                                console.log('AAAA',user[0].CODFILIAL)
+                                console.log('AAAA',user)
                                 if(user.length > 0){
                                     if(user[0].FONECORRECT) {
                                         const resultInsert = await DBConnectionMenager.getDefaultConnection().query(`

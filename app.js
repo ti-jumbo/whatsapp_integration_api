@@ -1,5 +1,4 @@
 require('dotenv').config()
-const checkAcess = require('./controllers/checkAcess.js');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -31,7 +30,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 
 //First whatsapp acess check
-app.use(CheckAcessController.checkAcess)
+app.use(CheckAcessController.checkAcessWhatsapp)
 app.use(CheckAcessController.checkAcessUser)
 
 
